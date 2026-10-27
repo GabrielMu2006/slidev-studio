@@ -1,0 +1,20 @@
+{
+  "name": "slidev-local",
+  "interface": {
+    "displayName": "Slidev Local Studio"
+  },
+  "plugins": [
+    {
+      "name": "slidev-studio",
+      "source": {
+        "source": "local",
+        "path": "./plugins/slidev-studio"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    }
+  ]
+}

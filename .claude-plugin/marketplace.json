@@ -1,0 +1,18 @@
+{
+  "name": "slidev-local",
+  "metadata": {
+    "description": "Slidev authoring and reference-backed full template import"
+  },
+  "owner": {
+    "name": "Li Muzhi",
+    "url": "https://github.com/GabrielMu2006"
+  },
+  "plugins": [
+    {
+      "name": "slidev-studio",
+      "source": "./plugins/slidev-studio",
+      "version": "0.2.0",
+      "description": "Author and verify Slidev decks, choose visual presets, and distill full reusable templates from reference PowerPoints with an agent."
+    }
+  ]
+}

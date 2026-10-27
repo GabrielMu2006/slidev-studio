@@ -1,0 +1,27 @@
+[
+  {
+    "id": "ics-course",
+    "name": "ICS 课程",
+    "description": "深色封面、白底内容、青蓝渐变标题。适合中文课程与教学。",
+    "source": "https://slide.huh.moe/00/1",
+    "defaults": {"accent":"#117494","accentEnd":"#148fa7","background":"#ffffff","foreground":"#202124","muted":"#737f90","font":"sans","titleSize":38,"bodySize":23,"codeSize":18,"spacing":48,"aspectRatio":"16/9","transition":"slide-left","coverStyle":"dark","coverImage":"","gradientTitle":true,"pageNumbers":true,"colorSchema":"light"}
+  },
+  {
+    "id": "minimal-light",
+    "name": "清简",
+    "description": "暖白底、墨绿强调、清晰的叙事层级。适合分享与产品讲解。",
+    "defaults": {"accent":"#126a58","accentEnd":"#126a58","background":"#faf9f5","foreground":"#202d28","muted":"#59665f","font":"sans","titleSize":37,"bodySize":24,"codeSize":18,"spacing":52,"aspectRatio":"16/9","transition":"fade","coverStyle":"light","coverImage":"","gradientTitle":false,"pageNumbers":true,"colorSchema":"light"}
+  },
+  {
+    "id": "academic-paper",
+    "name": "纸上学术",
+    "description": "纸色背景、深红标题、衬线风格。适合组会、论文与学术报告。",
+    "defaults": {"accent":"#8d2536","accentEnd":"#8d2536","background":"#fcfaf5","foreground":"#282329","muted":"#6e6266","font":"serif","titleSize":38,"bodySize":23,"codeSize":18,"spacing":50,"aspectRatio":"16/9","transition":"fade","coverStyle":"light","coverImage":"","gradientTitle":false,"pageNumbers":true,"colorSchema":"light"}
+  },
+  {
+    "id": "terminal-dark",
+    "name": "夜间技术",
+    "description": "深色画布、浅色代码、青绿强调。适合技术会议与代码演示。",
+    "defaults": {"accent":"#6ee7b7","accentEnd":"#67e8f9","background":"#111923","foreground":"#edf2f7","muted":"#a6b5c5","font":"sans","titleSize":38,"bodySize":23,"codeSize":18,"spacing":50,"aspectRatio":"16/9","transition":"fade","coverStyle":"dark","coverImage":"","gradientTitle":false,"pageNumbers":true,"colorSchema":"dark"}
+  }
+]

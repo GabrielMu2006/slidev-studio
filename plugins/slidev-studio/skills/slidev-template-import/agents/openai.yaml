@@ -1,0 +1,4 @@
+interface:
+  display_name: "Import Slidev Template"
+  short_description: "Distill complete Slidev templates from reference decks"
+  default_prompt: "Use $slidev-template-import to inspect my reference deck, reproduce its reusable layouts, verify the result and register a full template."

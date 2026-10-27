@@ -1,0 +1,4 @@
+interface:
+  display_name: "Slidev"
+  short_description: "Build expressive Slidev decks and verify live and exported results"
+  default_prompt: "Use $slidev to create or improve a presentation, choosing useful native features and verifying the requested delivery format."

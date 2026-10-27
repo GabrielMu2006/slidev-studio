@@ -1,0 +1,32 @@
+import json
+from pathlib import Path
+import sys
+import tempfile
+import unittest
+
+ROOT=Path(__file__).resolve().parents[1]
+sys.path.insert(0,str(ROOT/'scripts'))
+import install_agent
+import release
+
+class DistributionTests(unittest.TestCase):
+    def test_manifest_and_skill_versions_match(self):release.validate()
+    def test_agent_install_contains_both_self_contained_skills(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            for agent,folder in [('cursor','.cursor'),('claude','.claude'),('generic','.agents')]:
+                project=Path(tmp)/agent;install_agent.install(project,agent)
+                for skill in ['slidev','slidev-template-import']:
+                    self.assertTrue((project/folder/'skills'/skill/'SKILL.md').is_file())
+                receipt=json.loads((project/folder/'slidev-studio-install.json').read_text())
+                self.assertEqual(receipt['version'],(ROOT/'VERSION').read_text().strip())
+    def test_update_preserves_local_changes(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            project=Path(tmp);install_agent.install(project,'generic');path=project/'.agents/skills/slidev/SKILL.md';path.write_text(path.read_text()+'\nlocal change\n');before=(project/'.agents/slidev-studio-install.json').read_bytes()
+            with self.assertRaises(ValueError):install_agent.install(project,'generic')
+            self.assertTrue(path.read_text().endswith('local change\n'));self.assertEqual(before,(project/'.agents/slidev-studio-install.json').read_bytes())
+    def test_unrelated_skill_is_not_touched(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            project=Path(tmp);keep=project/'.cursor/skills/other/SKILL.md';keep.parent.mkdir(parents=True);keep.write_text('Keep')
+            install_agent.install(project,'cursor');self.assertEqual(keep.read_text(),'Keep')
+
+if __name__=='__main__':unittest.main()

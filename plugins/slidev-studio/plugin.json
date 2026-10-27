@@ -1,0 +1,37 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "slidev-studio",
+  "version": "0.2.0",
+  "description": "Author and verify Slidev decks, choose visual presets, and distill full reusable templates from reference PowerPoints with an agent.",
+  "license": "MIT",
+  "extensions": {
+    "com.openai": {
+      "interface": {
+        "displayName": "Slidev Studio",
+        "shortDescription": "选择模板、调整样式，制作并验证交互式演示文稿",
+        "longDescription": "提供四种风格预设和本地可视化选择器；通过 agent 从 PPT 提炼完整布局、组件、样式与素材，验证后导入模板库。支持 Slidev 交互、代码动画、图表、公式、演讲与导出；插件和两项 skill 统一版本更新。",
+        "developerName": "Li Muzhi",
+        "category": "Productivity",
+        "capabilities": [
+          "Read",
+          "Write",
+          "Interactive"
+        ],
+        "brandColor": "#146C87",
+        "composerIcon": "./assets/icon.svg",
+        "logo": "./assets/icon.svg",
+        "defaultPrompt": [
+          "用 Slidev Studio 帮我选择一个模板并设置演示风格",
+          "参考我提供的演示文稿制作中文课程模板",
+          "把这份 Slidev 演示导出并检查 PDF 和交互效果"
+        ]
+      }
+    }
+  },
+  "repository": "https://github.com/GabrielMu2006/slidev-studio",
+  "homepage": "https://github.com/GabrielMu2006/slidev-studio",
+  "author": {
+    "name": "Li Muzhi",
+    "url": "https://github.com/GabrielMu2006"
+  }
+}

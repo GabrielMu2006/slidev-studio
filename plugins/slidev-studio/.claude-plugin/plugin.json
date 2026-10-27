@@ -1,0 +1,12 @@
+{
+  "name": "slidev-studio",
+  "version": "0.2.0",
+  "description": "Author and verify Slidev decks, choose visual presets, and distill full reusable templates from reference PowerPoints with an agent.",
+  "author": {
+    "name": "Li Muzhi",
+    "url": "https://github.com/GabrielMu2006"
+  },
+  "homepage": "https://github.com/GabrielMu2006/slidev-studio",
+  "repository": "https://github.com/GabrielMu2006/slidev-studio",
+  "license": "MIT"
+}
