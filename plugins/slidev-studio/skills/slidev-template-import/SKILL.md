@@ -2,7 +2,7 @@
 name: slidev-template-import
 description: Extract a reusable full Slidev template from a user-provided PowerPoint, PDF, or rendered presentation reference. Use when the user gives a PPT/PPTX and asks to learn its design, import it as a template, or make future Slidev decks in that style. Produces layouts, components, styles, assets and a validated template bundle, rather than only color presets or background screenshots.
 metadata:
-  version: "0.3.1"
+  version: "0.4.0"
 ---
 
 # Import a full Slidev template

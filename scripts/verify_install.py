@@ -33,19 +33,36 @@ def verify(skills, receipt=None):
                    check=True, capture_output=True, text=True, encoding='utf-8', timeout=30, env=environment)
     return {'verified': True, 'version': expected['version'], 'skills': list(expected['skills']),
             'presetCount': len(presets), 'skillsDirectory': str(skills),
-            'scope': 'Installed content hashes and helper execution; host discovery/model execution is separate.'}
+            'installationType': 'skills-compatibility' if receipt is not None else 'skills-content',
+            'hostRegistrationVerified': False,
+            'scope': 'Content and helper execution only. Native plugin registration requires separate host evidence.'}
+
+
+def verify_plugin(root):
+    root = Path(root).resolve()
+    expected = json.loads((PLUGIN / 'release.json').read_text(encoding='utf-8'))
+    manifests = [root / name for name in ['.zcode-plugin/plugin.json', '.claude-plugin/plugin.json', '.codex-plugin/plugin.json', 'plugin.json'] if (root / name).is_file()]
+    if not manifests:
+        raise ValueError('No plugin manifest found; skills alone are not a native plugin installation')
+    for path in manifests:
+        data = json.loads(path.read_text(encoding='utf-8'))
+        if data.get('name') != 'slidev-studio' or data.get('version') != expected['version']:
+            raise ValueError('Installed plugin manifest/version mismatch: ' + str(path))
+    result = verify(root / 'skills')
+    result.update(installationType='plugin-package', manifests=[p.relative_to(root).as_posix() for p in manifests])
+    return result
 
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     targets = parser.add_mutually_exclusive_group(required=True)
-    targets.add_argument('--plugin-root', type=Path, help='Installed plugin root returned by the native host')
+    targets.add_argument('--plugin-root', type=Path, help='Verify a plugin package; host registration must be checked separately')
     targets.add_argument('--agent', choices=['cursor', 'claude', 'generic'])
     parser.add_argument('--project', type=Path)
     args = parser.parse_args()
     try:
         if args.plugin_root:
-            result = verify(args.plugin_root / 'skills')
+            result = verify_plugin(args.plugin_root)
         else:
             if args.project is None:
                 parser.error('--project is required with --agent')

@@ -7,7 +7,7 @@ Canonical code and both skills live in this repository. Installed caches are gen
 ## Maintainer release
 
 1. Modify `plugins/slidev-studio/skills/` or the plugin tools. For upstream changes, run `python3 scripts/check_upstream.py`, inspect the official diff and merge deliberately. Never overwrite the customized skill with an upstream installer.
-2. Run `python3 scripts/release.py sync X.Y.Z`. This updates VERSION, portable/Codex/Claude manifests, the Claude marketplace version, skill metadata, and content hashes together.
+2. Run `python3 scripts/release.py sync X.Y.Z`. This updates VERSION, portable/Codex/Claude/ZCode manifests, native marketplace versions and the DSH package, skill metadata, and content hashes together.
 3. Run both test suites and `python3 scripts/release.py validate`. Build archives with `python3 scripts/release.py build`. Review their contents; user decks and libraries do not belong in this repository.
 4. Commit, push, tag `vX.Y.Z`, and push the tag. The release workflow tests the tagged code, checks tag/version consistency, builds deterministic plugin and portable-skills ZIPs, and publishes them with SHA256SUMS.
 
@@ -27,7 +27,15 @@ The first command refreshes the configured Git marketplace. Reinstalling resolve
 
 Use Claude's native marketplace/plugin update commands for the `slidev-local` marketplace. This repo includes `.claude-plugin/marketplace.json` and the plugin's `.claude-plugin/plugin.json`; both load the same canonical `skills/` content.
 
-## Cursor or generic Agent Skills
+## ZCode native update
+
+Refresh the configured slidev-local marketplace, then check/update slidev-studio in Settings → Plugins. The root marketplace entry version and installed plugin manifest must match VERSION. Confirm plugin activation and Plugin skills origin; importing user skills is a different mode.
+
+## DeepSeek Harness native update
+
+Use the same active profile and replace the bundle dependency with the new version's Git tag or GitHub release tarball from INSTALL.md. Retain user profile configuration and bundle enabled state, and confirm activation after the host refresh/restart. The release includes slidev-studio-dsh-X.Y.Z.tgz; no npm publication is claimed.
+
+## Skills compatibility update (Cursor / other Agent Skills)
 
 From an updated checkout:
 

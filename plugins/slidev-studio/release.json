@@ -1,8 +1,8 @@
 {
-  "version": "0.3.1",
+  "version": "0.4.0",
   "repository": "https://github.com/GabrielMu2006/slidev-studio",
   "skills": {
-    "slidev": "47025beab7825ed0155bfe264d985bd82ca693d6885fd81dfa3091249963ab30",
-    "slidev-template-import": "c9268ddeeae412f79252bb4adcab8fe23440b3d767c95330480eefdb380d67b7"
+    "slidev": "226e0958b00f5c8a82fe4ecfee4e581fa9b75fcfc65e3c6e5eb5c1bdbeea01e4",
+    "slidev-template-import": "a8f4cd137876027010e0b7008e4809b856030c4532be81aaef624802f8e53421"
   }
 }

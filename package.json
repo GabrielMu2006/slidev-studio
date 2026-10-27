@@ -1,0 +1,24 @@
+{
+  "name": "slidev-studio",
+  "version": "0.4.0",
+  "description": "Slidev Studio native DeepSeek Harness provider for two bundled presentation skills",
+  "type": "module",
+  "main": "./adapters/dsh/index.mjs",
+  "exports": "./adapters/dsh/index.mjs",
+  "license": "MIT",
+  "repository": "https://github.com/GabrielMu2006/slidev-studio",
+  "files": [
+    "adapters/dsh",
+    "plugins/slidev-studio",
+    "README.md",
+    "INSTALL.md"
+  ],
+  "dsh": {
+    "bundle": {
+      "patch": "./adapters/dsh/cordis.patch.yml"
+    }
+  },
+  "scripts": {
+    "test": "node --test tests/dsh-provider.test.mjs"
+  }
+}

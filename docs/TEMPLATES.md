@@ -1,8 +1,8 @@
 # 八套模板预览 / Eight style previews
 
-八套均为内置风格预设；完整 PPT 布局模板通过独立导入 skill 生成。以下是同一组内容的真实 Slidev 封面与内容页。可以按编号或标识筛选保留。
+八套均为内置风格预设；完整 PPT 布局模板通过独立导入 skill 生成。以下是同一组内容的真实 Slidev 封面与内容页。八套全部保留，第 1 套固定命名青蓝课堂。
 
-These eight items are built-in style presets. Full PPT-derived layout templates use the separate import skill. Each pair shows actual Slidev cover/content renders with matching sample content. Select by number or ID.
+These eight items are built-in style presets. Full PPT-derived layout templates use the separate import skill. Each pair shows actual Slidev cover/content renders with matching sample content. All eight are retained; preset 1 is Cyan Classroom.
 
 ## 1. 青蓝课堂 / Cyan Classroom
 

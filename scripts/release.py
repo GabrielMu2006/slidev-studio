@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 """One release version for plugin code, host manifests and every bundled skill."""
 import argparse
+import gzip
+import io
+import tarfile
 import hashlib
 import json
 from pathlib import Path
@@ -26,12 +29,15 @@ def tree_hash(root):
 def sync(version):
     if not re.fullmatch(r'\d+\.\d+\.\d+',version):raise ValueError('Version must be MAJOR.MINOR.PATCH')
     (ROOT/'VERSION').write_text(version+'\n')
+    package=json.loads((ROOT/'package.json').read_text(encoding='utf-8'));package['version']=version;write(ROOT/'package.json',package)
     main=json.loads((PLUGIN/'plugin.json').read_text(encoding='utf-8'));main['version']=version;main['repository']=REPOSITORY;main['homepage']=REPOSITORY;main['author']={'name':'Li Muzhi','url':'https://github.com/GabrielMu2006'}
     write(PLUGIN/'plugin.json',main)
     overlay=json.loads((PLUGIN/'.codex-plugin/plugin.json').read_text(encoding='utf-8'));overlay.update({k:main[k] for k in ['version','repository','homepage','author']});write(PLUGIN/'.codex-plugin/plugin.json',overlay)
     write(PLUGIN/'.claude-plugin/plugin.json',{k:main[k] for k in ['name','version','description','author','homepage','repository','license']})
     claude={'name':'slidev-local','metadata':{'description':'Slidev authoring and reference-backed full template import'},'owner':main['author'],'plugins':[{'name':'slidev-studio','source':'./plugins/slidev-studio','version':version,'description':main['description']}]}
     write(ROOT/'.claude-plugin/marketplace.json',claude)
+    write(PLUGIN/'.zcode-plugin/plugin.json',{**{k:main[k] for k in ['name','version','description','author','homepage','repository','license']},'skills':'./skills'})
+    write(ROOT/'marketplace.json',{'name':'slidev-local','description':'Slidev Studio plugin marketplace','plugins':[{'name':'slidev-studio','source':'./plugins/slidev-studio','version':version,'description':main['description'],'category':'productivity'}]})
     for path in (PLUGIN/'skills').glob('*/SKILL.md'):
         text=path.read_text(encoding='utf-8');first,body=text[4:].split('\n---',1)
         if re.search(r'^metadata:\s*$',first,re.M):first=re.sub(r'(^  version:).*$',lambda m:m[1]+' "'+version+'"',first,flags=re.M)
@@ -41,8 +47,15 @@ def sync(version):
 
 def validate():
     version=(ROOT/'VERSION').read_text().strip()
-    for path in [PLUGIN/'plugin.json',PLUGIN/'.codex-plugin/plugin.json',PLUGIN/'.claude-plugin/plugin.json',PLUGIN/'release.json']:
+    package=json.loads((ROOT/'package.json').read_text(encoding='utf-8'))
+    if package.get('version')!=version or package.get('name')!='slidev-studio' or package.get('dsh',{}).get('bundle',{}).get('patch')!='./adapters/dsh/cordis.patch.yml':raise ValueError('DSH package metadata mismatch')
+    for path in [PLUGIN/'plugin.json',PLUGIN/'.codex-plugin/plugin.json',PLUGIN/'.claude-plugin/plugin.json',PLUGIN/'.zcode-plugin/plugin.json',PLUGIN/'release.json']:
         if json.loads(path.read_text(encoding='utf-8'))['version']!=version:raise ValueError('Version mismatch: '+str(path))
+    for manifest in [ROOT/'marketplace.json',ROOT/'.claude-plugin/marketplace.json']:
+        catalog=json.loads(manifest.read_text(encoding='utf-8'))
+        entry=next((p for p in catalog['plugins'] if p['name']=='slidev-studio'),None)
+        if not entry or entry.get('version')!=version or entry.get('source')!='./plugins/slidev-studio':
+            raise ValueError('Marketplace version/source mismatch: '+str(manifest))
     data=json.loads((PLUGIN/'release.json').read_text())
     for name,sha in data['skills'].items():
         folder=PLUGIN/'skills'/name
@@ -69,7 +82,14 @@ def build(out):
     zip_files(plugin,[(p,'slidev-studio/'+p.relative_to(PLUGIN).as_posix()) for p in skill_files(PLUGIN)])
     portable=out/f'slidev-studio-skills-{version}.zip'
     zip_files(portable,[(p,'.agents/skills/'+p.relative_to(PLUGIN/'skills').as_posix()) for p in skill_files(PLUGIN/'skills')])
-    sums=''.join(hashlib.sha256(p.read_bytes()).hexdigest()+'  '+p.name+'\n' for p in [plugin,portable])
+    dsh=out/f'slidev-studio-dsh-{version}.tgz'
+    entries=[(ROOT/'package.json','package/package.json'),(ROOT/'README.md','package/README.md'),(ROOT/'INSTALL.md','package/INSTALL.md')]
+    entries += [(p,'package/adapters/dsh/'+p.relative_to(ROOT/'adapters/dsh').as_posix()) for p in skill_files(ROOT/'adapters/dsh')]
+    entries += [(p,'package/plugins/slidev-studio/'+p.relative_to(PLUGIN).as_posix()) for p in skill_files(PLUGIN)]
+    with dsh.open('wb') as raw, gzip.GzipFile(fileobj=raw,mode='wb',mtime=0,filename='') as compressed, tarfile.open(fileobj=compressed,mode='w') as archive:
+        for path,name in entries:
+            data=path.read_bytes();info=tarfile.TarInfo(name);info.size=len(data);info.mode=0o644;archive.addfile(info,io.BytesIO(data))
+    sums=''.join(hashlib.sha256(p.read_bytes()).hexdigest()+'  '+p.name+'\n' for p in [plugin,portable,dsh])
     (out/'SHA256SUMS').write_text(sums)
     print(str(plugin));print(str(portable))
 

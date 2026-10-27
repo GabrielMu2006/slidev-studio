@@ -11,7 +11,7 @@
     {
       "name": "slidev-studio",
       "source": "./plugins/slidev-studio",
-      "version": "0.3.1",
+      "version": "0.4.0",
       "description": "Author and verify Slidev decks, choose visual presets, and distill full reusable templates from reference PowerPoints with an agent."
     }
   ]

@@ -1,42 +1,20 @@
-# Slidev Studio
+# Slidev Studio — Plugin / 插件
 
-[中文 / English README](https://github.com/GabrielMu2006/slidev-studio#readme) · [Agent 安装 / Agent installation](https://github.com/GabrielMu2006/slidev-studio/blob/main/INSTALL.md)
+本目录是 **原生插件包**，包含 slidev 与 slidev-template-import 两项 skill、本地工具和八套已保留风格预设（第 1 套为青蓝课堂）。安装入口是仓库 [README](https://github.com/GabrielMu2006/slidev-studio#readme) 与 [INSTALL.md](https://github.com/GabrielMu2006/slidev-studio/blob/main/INSTALL.md)。
 
-## 中文
+请按当前宿主选择 Claude Code、ZCode、DeepSeek Harness 或 Codex 的原生路线；其他 agent 先确认实际插件格式。只复制 skills 目录属于 skills 兼容模式，不能报告已在宿主中注册插件。插件提供的 skill 出现在技能列表中是正常现象；还需核对插件管理器登记与来源。
 
-插件包含两项统一版本的 skill：`slidev`（Slidev 创作、风格选择器、交互与导出）和 `slidev-template-import`（从 PPT 提炼完整模板并验证、入库、复用）。八套内置风格为 青蓝课堂、清简、纸上学术、夜间技术、咨询蓝、琥珀叙事、蓝图实验和玫瑰演讲。它们是可调整的风格预设；从 PPT 提取的完整布局模板使用单独的模板库。
+This is the **native plugin payload**, containing two skills, local tools and the eight retained presets. Follow the repository README and INSTALL.md for the active host's native route. A copied skills directory is compatibility mode, not a native registration. Plugin-origin skills normally appear in skill lists; check host registration as well.
 
-从 GitHub 安装：
+The package verifier proves manifests/content/helper execution only. Report native registration, skill discovery and helper checks separately. Claude Code native install: `/plugin install slidev-studio --marketplace GabrielMu2006/slidev-studio`.
 
-```bash
-codex plugin marketplace add GabrielMu2006/slidev-studio
-codex plugin add slidev-studio@slidev-local --json
-```
-
-Claude Code 使用 `claude plugin install slidev-studio --marketplace GabrielMu2006/slidev-studio`。Cursor 和其他 agent 请按上方安装文档操作。安装/更新后新建聊天；两项 skill 共用一个版本，不再另装全局重复副本。
-
-从本插件目录运行：
+The DSH native adapter lives in the repository's root Node package and reads this payload.
 
 ```bash
 python3 skills/slidev/scripts/studio.py list
 python3 skills/slidev/scripts/studio.py serve /path/to/talk --no-browser
-python3 skills/slidev/scripts/studio.py new ./talk --template editorial-amber --title "让复杂的想法变得清晰"
-python3 skills/slidev/scripts/studio.py apply ./talk --template consulting-blue
-python3 skills/slidev/scripts/studio.py restore ./talk
 ```
 
-选择器可设置颜色、字体、字号、留白、比例、转场、页码和版式气质，支持本地封面图片和项目预设。应用保留正文、备注与组件，并备份受管理文件；遇到复杂样式入口或 YAML 会拒绝自动覆盖。完整 PPT 模板导入流程见 `skills/slidev-template-import/SKILL.md`。
+创作与完整模板导入分别遵循 skills/slidev/SKILL.md 和 skills/slidev-template-import/SKILL.md。用户项目和模板库放在插件缓存之外；更新随统一插件版本发布。
 
-Python 3.9+ 可运行工具；真实演示需要符合 CLI 要求的 Node。样式预览不执行 Vue 动画；交付前须检查真实 Slidev 页面及导出。普通 PPTX 是图片；可编辑导出需检查当前 CLI 支持及实际结果。
-
-## English
-
-Two coordinated skills ship together: `slidev` (authoring, preset picker, interactions and exports) and `slidev-template-import` (PPT-derived full templates, verification, library registration and reuse). Eight built-in styles are Cyan Classroom, Minimal Light, Academic Paper, Terminal Dark, Consulting Blue, Editorial Amber, Blueprint Lab and Keynote Rose. These are configurable style presets; full layout bundles use a separate template library.
-
-Install from GitHub using the Codex commands above, or `claude plugin install slidev-studio --marketplace GabrielMu2006/slidev-studio` for Claude Code. Cursor and generic hosts follow the linked installation guide. Start a fresh chat after installation/update; do not add duplicate global skill copies.
-
-Run the commands above from this plugin directory to list, preview, create, apply and restore presets. The picker configures colors, typography, spacing, aspect ratio, transitions, page numbers and composition. It supports local cover images and project presets. Applying preserves narrative, notes and components, backs up managed files, and refuses complex style-entry/YAML replacements. See `skills/slidev-template-import/SKILL.md` for full reference-template import.
-
-Python 3.9+ runs the tools; real decks require Node satisfying the installed CLI. Style previews do not execute Vue animation. Inspect real Slidev pages and exports before delivery. Ordinary PPTX uses rendered images; verify editable-export availability and actual output against the installed CLI.
-
-[Templates / 模板预览](https://github.com/GabrielMu2006/slidev-studio/blob/main/docs/TEMPLATES.md) · [Unified updates / 统一更新](https://github.com/GabrielMu2006/slidev-studio/blob/main/docs/UPDATING.md)
+Use the two bundled skill entry points for authoring and full reference-template import. Keep projects/libraries outside caches; both skills update with the plugin release.
