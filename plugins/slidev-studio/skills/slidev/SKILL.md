@@ -2,7 +2,7 @@
 name: slidev
 description: Create, improve, debug, rehearse, and export Slidev presentations using Markdown and Vue; select and configure templates with the local Slidev Studio. Use for Slidev or sli.dev requests, presentation templates, and web slide decks with code, interactive demos, diagrams, or math. Do not select Slidev automatically for unrelated editable PowerPoint requests.
 metadata:
-  version: "0.2.1"
+  version: "0.3.0"
 ---
 
 # Slidev
@@ -15,7 +15,7 @@ When a user provides a PPT/PPTX/PDF and asks to extract its reusable design, rea
 
 ## Template selection and settings
 
-For choosing, previewing, applying, or saving a template, read [Template Studio](references/template-studio.md). The bundled local picker and CLI support four presets, including an ICS course style inspired by the supplied reference, plus project-local custom presets. Configuration is saved as `slidev-studio.json`, changes are backed up, and existing slide content is retained. Do not force the ICS style on unrelated decks.
+For choosing, previewing, applying, or saving a template, read [Template Studio](references/template-studio.md). The bundled local picker and CLI support eight presets with adjustable composition, including an ICS course style inspired by the supplied reference, plus project-local custom presets. Configuration is saved as `slidev-studio.json`, changes are backed up, and existing slide content is retained. Do not force the ICS style on unrelated decks.
 
 ```bash
 python3 <skill-dir>/scripts/studio.py serve /absolute/path/to/talk --no-browser

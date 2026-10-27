@@ -1,13 +1,13 @@
 {
   "name": "slidev-studio",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "description": "Author and verify Slidev decks, choose visual presets, and distill full reusable templates from reference PowerPoints with an agent.",
   "license": "MIT",
   "skills": "./skills/",
   "interface": {
     "displayName": "Slidev Studio",
     "shortDescription": "选择模板、调整样式，制作并验证交互式演示文稿",
-    "longDescription": "提供四种风格预设和本地可视化选择器；通过 agent 从 PPT 提炼完整布局、组件、样式与素材，验证后导入模板库。支持 Slidev 交互、代码动画、图表、公式、演讲与导出；插件和两项 skill 统一版本更新。",
+    "longDescription": "提供八套内置风格预设、本地可视化选择器和可调整版式；通过 agent 从 PPT 提炼完整布局、组件、样式与素材，验证后导入模板库。支持 Slidev 交互、代码动画、图表、公式、演讲与导出；插件和两项 skill 统一版本更新。",
     "developerName": "Li Muzhi",
     "category": "Productivity",
     "capabilities": [

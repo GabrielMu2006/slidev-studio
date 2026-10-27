@@ -19,6 +19,10 @@ Read the actual printed port and show that localhost URL in the available browse
 | `minimal-light` | General talks, product explanations | Warm white, green accent, restrained typography. |
 | `academic-paper` | Research meetings, papers | Paper background, red headings, serif typography. |
 | `terminal-dark` | Code demos, technical talks | Dark canvas, light text, mint accent. |
+| `consulting-blue` | Business decisions, status reports | White/navy, left-aligned cover, ruled headings. |
+| `editorial-amber` | Humanities, case studies | Cream/amber, serif hierarchy, editorial spacing. |
+| `blueprint-lab` | Engineering, architecture | Navy grid, cyan annotations, monospaced headings. |
+| `keynote-rose` | Keynotes, launches | Rose/berry, large headings, open poster composition. |
 
 For a prompt such as “make a Chinese teaching deck like this reference,” `ics-course` is a reasonable starting choice. For an existing branded project, inspect its theme first and preserve it unless restyling is requested.
 
@@ -44,7 +48,7 @@ python3 <skill-dir>/scripts/studio.py apply ./talk --template my-course
 python3 <skill-dir>/scripts/studio.py restore ./talk --backup latest
 ```
 
-Settings are validated data, not arbitrary CSS or executable templates. Template selection resets settings to that template's defaults, while retaining the current title. Custom templates live in `slidev-templates/*.json`; copy that folder and referenced cover assets when moving them to another project. The picker can save its current unsaved settings directly as a custom template after a deck exists.
+Settings are validated data, not arbitrary CSS or executable templates. The composition control selects classic, briefing, editorial, blueprint or poster heading/cover rules. Older saved presets without that control inherit classic composition. Template selection resets settings to that template's defaults, while retaining the current title. Custom templates live in `slidev-templates/*.json`; copy that folder and referenced cover assets when moving them to another project. The picker can save its current unsaved settings directly as a custom template after a deck exists.
 
 ## Managed scope and recoverability
 

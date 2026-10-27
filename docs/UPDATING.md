@@ -1,5 +1,7 @@
 # One source, one release
 
+For agent-led installation/update from a repository URL, start with [INSTALL.md](../INSTALL.md). The verifier in `scripts/verify_install.py` checks the actual installed snapshot and executes its helpers.
+
 Canonical code and both skills live in this repository. Installed caches are generated artifacts. User templates live in a project/library outside those caches.
 
 ## Maintainer release

@@ -63,6 +63,17 @@ class StudioTests(unittest.TestCase):
         path=self.project/studio.STYLE;path.write_text(path.read_text().replace(studio.END,""));before=path.read_bytes()
         with self.assertRaises(ValueError):studio.apply(self.project,studio.default_config())
         self.assertEqual(before,path.read_bytes())
+    def test_legacy_custom_template_inherits_classic_composition(self):
+        studio.save_template(self.project,'legacy-style','Legacy')
+        path=self.project/'slidev-templates/legacy-style.json';data=json.loads(path.read_text());data['defaults'].pop('composition');path.write_text(json.dumps(data))
+        config=studio.default_config(self.project,template='legacy-style')
+        self.assertEqual(config['settings']['composition'],'classic')
+        studio.apply(self.project,config)
+        self.assertTrue(studio.load_config(self.project)['template']=='legacy-style')
+    def test_invalid_composition_cannot_modify_project(self):
+        original=(self.project/'slides.md').read_bytes();config=studio.default_config();config['settings']['composition']='arbitrary-style'
+        with self.assertRaises(ValueError):studio.apply(self.project,config)
+        self.assertEqual(original,(self.project/'slides.md').read_bytes())
     def test_custom_template_roundtrip(self):
         config=studio.load_config(self.project);config["settings"]["accent"]="#123456"
         studio.save_template(self.project,"my-course","我的模板",config)

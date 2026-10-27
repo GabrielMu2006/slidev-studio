@@ -88,7 +88,8 @@ def validate_config(config, items):
             raise ValueError(f"{key}: expected an integer between {low} and {high}")
     for key, choices in {"font": FONTS, "aspectRatio": ["16/9", "4/3", "16/10"],
                          "transition": ["fade", "slide-left", "slide-up", "none"],
-                         "coverStyle": ["light", "dark"], "colorSchema": ["light", "dark"]}.items():
+                         "coverStyle": ["light", "dark"], "colorSchema": ["light", "dark"],
+                         "composition": ["classic", "briefing", "editorial", "blueprint", "poster"]}.items():
         if settings[key] not in choices:
             raise ValueError(f"Invalid {key}")
     for key in ["gradientTitle", "pageNumbers"]:
@@ -131,6 +132,40 @@ def css(config):
     cover = f"background-image:linear-gradient(#0007,#0007),url('{image}');background-size:cover;background-position:center;color:#f8fafc" if s["coverStyle"] == "dark" else f"background:{s['background']};color:{s['foreground']}"
     cover_ink = "#f8fafc" if s["coverStyle"] == "dark" else s["foreground"]
     cover_muted = "#d4dce5" if s["coverStyle"] == "dark" else s["muted"]
+    composition = s.get("composition", "classic")
+    grid_selector = ".slidev-layout,.slidev-layout.starter-cover,.slidev-layout.cover" if s["coverStyle"] == "light" else ".slidev-layout:not(.starter-cover):not(.cover)"
+    variants = {
+        "classic": "",
+        "briefing": f"""
+.slidev-layout h1 {{border-bottom:2px solid {s['accent']}55;padding-bottom:16px;line-height:1.2;}}
+.slidev-layout.starter-cover,.slidev-layout.cover {{text-align:left;padding-top:82px;border-top:10px solid {s['accent']};}}
+.slidev-layout.starter-cover h1,.slidev-layout.cover h1 {{border:0;max-width:820px;margin:44px 0 28px;}}
+.slidev-layout.starter-cover :is(p,.caption,.eyebrow,.cover-rule),.slidev-layout.cover :is(p,.caption,.eyebrow) {{margin-left:0;margin-right:0;}}
+""",
+        "editorial": f"""
+.slidev-layout {{border-top:5px solid {s['accent']};}}
+.slidev-layout h1 {{line-height:1.18;font-weight:600;letter-spacing:-.025em;}}
+.slidev-layout .eyebrow {{letter-spacing:.12em;font-family:{FONTS['sans']};}}
+.slidev-layout.starter-cover,.slidev-layout.cover {{text-align:left;padding-top:72px;}}
+.slidev-layout.starter-cover h1,.slidev-layout.cover h1 {{max-width:800px;margin:46px 0 30px;}}
+.slidev-layout.starter-cover :is(p,.caption,.eyebrow,.cover-rule),.slidev-layout.cover :is(p,.caption,.eyebrow) {{margin-left:0;margin-right:0;}}
+""",
+        "blueprint": f"""
+{grid_selector} {{background-image:linear-gradient({s['accent']}10 1px,transparent 1px),linear-gradient(90deg,{s['accent']}10 1px,transparent 1px)!important;background-size:32px 32px!important;}}
+.slidev-layout h1,.slidev-layout .eyebrow {{font-family:ui-monospace,"SFMono-Regular",Consolas,{FONTS['sans']};}}
+.slidev-layout h1 {{line-height:1.25;}}
+.slidev-layout .eyebrow {{letter-spacing:.1em;}}
+.slidev-layout.starter-cover,.slidev-layout.cover {{text-align:left;padding-top:84px;}}
+.slidev-layout.starter-cover h1,.slidev-layout.cover h1 {{max-width:820px;margin:42px 0 28px;}}
+.slidev-layout.starter-cover :is(p,.caption,.eyebrow,.cover-rule),.slidev-layout.cover :is(p,.caption,.eyebrow) {{margin-left:0;margin-right:0;}}
+""",
+        "poster": f"""
+.slidev-layout h1 {{line-height:1.12;letter-spacing:-.035em;font-weight:800;}}
+.slidev-layout.starter-cover,.slidev-layout.cover {{padding-top:58px;border-bottom:14px solid {s['accent']};}}
+.slidev-layout.starter-cover h1,.slidev-layout.cover h1 {{max-width:820px;margin:38px auto 28px;font-size:{min(72,s['titleSize']+20)}px;}}
+.slidev-layout .eyebrow {{font-weight:700;letter-spacing:.12em;}}
+""",
+    }
     return f"""{BEGIN}
 .slidev-layout {{ --talk-accent:{s['accent']};--talk-ink:{s['foreground']};--talk-muted:{s['muted']};--slidev-code-font-size:{s['codeSize']}px;background:{s['background']};color:{s['foreground']};font-family:{FONTS[s['font']]};font-size:{s['bodySize']}px;padding-left:{s['spacing']}px;padding-right:{s['spacing']}px; }}
 .slidev-layout h1 {{font-size:{s['titleSize']}px;{title_color};letter-spacing:normal;}}
@@ -140,7 +175,7 @@ def css(config):
 .slidev-layout :is(.eyebrow,.explanation) {{color:{s['accent']};}}
 .slidev-layout.starter-cover,.slidev-layout.cover {{ {cover};text-align:center;padding-top:78px; }}
 .slidev-layout.starter-cover h1,.slidev-layout.cover h1 {{background:none;color:{cover_ink};font-size:{min(66,s['titleSize']+20)}px;margin:42px auto 26px;}}
-.slidev-layout.starter-cover :is(p,.caption,.eyebrow),.slidev-layout.cover :is(p,.caption,.eyebrow) {{color:{cover_muted};margin-left:auto;margin-right:auto;}}
+.slidev-layout.starter-cover :is(p,.caption,.eyebrow),.slidev-layout.cover :is(p,.caption,.eyebrow) {{color:{cover_muted};opacity:1;margin-left:auto;margin-right:auto;}}
 .slidev-layout.starter-cover .cover-rule {{margin-left:auto;margin-right:auto;}}
 .slidev-layout.starter-ending h1 {{font-size:{min(52,s['titleSize']+8)}px;}}
 .slidev-layout table {{width:100%;border-collapse:collapse;}}
@@ -152,6 +187,7 @@ def css(config):
 .slidev-layout .latency-demo :is(strong,button) {{color:{s['accent']};}}
 .slidev-layout .latency-demo button {{background:{s['background']};border-color:{s['accent']};}}
 .slidev-layout .latency-demo .latency-track>div {{background:{s['accent']};}}
+{variants[composition]}
 {END}
 """
 

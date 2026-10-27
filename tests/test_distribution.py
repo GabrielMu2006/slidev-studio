@@ -9,6 +9,7 @@ ROOT=Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(ROOT/'scripts'))
 import install_agent
 import release
+import verify_install
 
 class DistributionTests(unittest.TestCase):
     def test_hash_uses_posix_case_sensitive_order(self):
@@ -29,6 +30,18 @@ class DistributionTests(unittest.TestCase):
                     self.assertTrue((project/folder/'skills'/skill/'SKILL.md').is_file())
                 receipt=json.loads((project/folder/'slidev-studio-install.json').read_text())
                 self.assertEqual(receipt['version'],(ROOT/'VERSION').read_text().strip())
+    def test_installed_helpers_and_catalog_verify(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            project=Path(tmp);install_agent.install(project,'generic')
+            result=verify_install.verify(project/'.agents/skills',project/'.agents/slidev-studio-install.json')
+            self.assertTrue(result['verified']);self.assertEqual(result['presetCount'],8)
+            (project/'.agents/skills/slidev/assets/studio/templates.json').write_text('[]')
+            with self.assertRaises(ValueError):verify_install.verify(project/'.agents/skills')
+    def test_stale_receipt_is_rejected(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            project=Path(tmp);install_agent.install(project,'cursor');receipt=project/'.cursor/slidev-studio-install.json'
+            data=json.loads(receipt.read_text());data['version']='0.0.0';receipt.write_text(json.dumps(data))
+            with self.assertRaises(ValueError):verify_install.verify(project/'.cursor/skills',receipt)
     def test_update_preserves_local_changes(self):
         with tempfile.TemporaryDirectory() as tmp:
             project=Path(tmp);install_agent.install(project,'generic');path=project/'.agents/skills/slidev/SKILL.md';path.write_text(path.read_text()+'\nlocal change\n');before=(project/'.agents/slidev-studio-install.json').read_bytes()
