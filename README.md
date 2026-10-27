@@ -69,7 +69,7 @@ Rendering and visual inspection are required before marking a template verified.
 ## Development and releases
 
 ```bash
-python3 scripts/release.py sync 0.2.0
+python3 scripts/release.py sync 0.2.1
 python3 -m unittest discover -s plugins/slidev-studio/tests -v
 python3 -m unittest discover -s tests -v
 python3 scripts/release.py validate

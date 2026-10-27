@@ -25,7 +25,7 @@ def relative(root,name):
 
 def files(root):
     result=[]
-    for p in sorted(root.rglob('*')):
+    for p in sorted(root.rglob('*'),key=lambda p:p.relative_to(root).as_posix()):
         rel=p.relative_to(root)
         if p.is_symlink():raise ValueError('Symlinks are not allowed: '+str(rel))
         if any(part in FORBIDDEN or part=='.env' or part.startswith('.env.') for part in rel.parts):raise ValueError('Runtime or private file in template: '+str(rel))

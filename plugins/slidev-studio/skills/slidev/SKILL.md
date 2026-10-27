@@ -2,7 +2,7 @@
 name: slidev
 description: Create, improve, debug, rehearse, and export Slidev presentations using Markdown and Vue; select and configure templates with the local Slidev Studio. Use for Slidev or sli.dev requests, presentation templates, and web slide decks with code, interactive demos, diagrams, or math. Do not select Slidev automatically for unrelated editable PowerPoint requests.
 metadata:
-  version: "0.2.0"
+  version: "0.2.1"
 ---
 
 # Slidev

@@ -1,3 +1,4 @@
+import hashlib
 import json
 from pathlib import Path
 import sys
@@ -10,6 +11,15 @@ import install_agent
 import release
 
 class DistributionTests(unittest.TestCase):
+    def test_hash_uses_posix_case_sensitive_order(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root=Path(tmp)
+            for name in ['a.txt','Z.txt','b/n.txt']:
+                p=root/name;p.parent.mkdir(parents=True,exist_ok=True);p.write_bytes(name.encode())
+            h=hashlib.sha256()
+            for name in ['Z.txt','a.txt','b/n.txt']:
+                h.update(name.encode()+b'\0'+hashlib.sha256(name.encode()).digest())
+            self.assertEqual(release.tree_hash(root),h.hexdigest())
     def test_manifest_and_skill_versions_match(self):release.validate()
     def test_agent_install_contains_both_self_contained_skills(self):
         with tempfile.TemporaryDirectory() as tmp:

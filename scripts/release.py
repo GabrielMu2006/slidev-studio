@@ -16,7 +16,7 @@ def write(path,value):
     path.parent.mkdir(parents=True,exist_ok=True);path.write_text(json.dumps(value,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
 
 def skill_files(root):
-    return [p for p in sorted(root.rglob('*')) if p.is_file() and '__pycache__' not in p.parts and p.suffix!='.pyc']
+    return [p for p in sorted(root.rglob('*'),key=lambda p:p.relative_to(root).as_posix()) if p.is_file() and '__pycache__' not in p.parts and p.suffix!='.pyc']
 
 def tree_hash(root):
     h=hashlib.sha256()

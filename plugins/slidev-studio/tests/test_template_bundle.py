@@ -31,6 +31,10 @@ class BundleTests(unittest.TestCase):
     def setUp(self):
         self.temp=tempfile.TemporaryDirectory();self.root=Path(self.temp.name);self.package=self.root/'package';self.data=fixture(self.package);self.library=self.root/'library'
     def tearDown(self):self.temp.cleanup()
+    def test_files_use_portable_case_sensitive_order(self):
+        for name in ['a.txt','Z.txt']:(self.package/name).write_bytes(b'fixture')
+        actual=[p.relative_to(self.package).as_posix() for p in bundle.files(self.package)]
+        self.assertEqual(actual,sorted(actual))
     def test_full_install_and_instantiate(self):
         bundle.install(self.package,self.library);out=self.root/'talk';bundle.instantiate('sample',self.library,out)
         for rel in ['layouts/cover.vue','components/Example.vue','public/logo.svg','slides.md']:
