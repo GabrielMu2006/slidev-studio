@@ -6,4 +6,4 @@ The local authoring workflow, template configuration system, Python selector, we
 
 Official documentation was researched on 2026-10-27: [Slidev](https://sli.dev/), [AI workflow](https://sli.dev/guide/work-with-ai), [exporting](https://sli.dev/guide/exporting), [configuration](https://sli.dev/custom/), [PWA](https://sli.dev/features/pwa), and [Codex plugin packaging](https://developers.openai.com/plugins/build/plugins).
 
-The optional ICS visual preset is inspired by [the user-supplied introduction deck](https://slide.huh.moe/00/1). Only general visual traits were adapted; its personal information, presentation text, and photographic assets are not bundled. The included processor illustration is original SVG artwork.
+The optional Cyan Classroom visual preset is inspired by [the user-supplied introduction deck](https://slide.huh.moe/00/1). Only general visual traits were adapted; its personal information, presentation text, and photographic assets are not bundled. The included processor illustration is original SVG artwork.

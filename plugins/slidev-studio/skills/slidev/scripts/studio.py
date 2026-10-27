@@ -26,6 +26,7 @@ CONFIG = "slidev-studio.json"
 STYLE = "styles/index.css"
 BEGIN = "/* slidev-studio:begin */"
 END = "/* slidev-studio:end */"
+LEGACY_TEMPLATE_IDS = {"ics-course": "cyan-classroom"}
 FONTS = {
     "sans": '"Avenir Next", "Segoe UI", "PingFang SC", "Microsoft YaHei", "Noto Sans CJK SC", sans-serif',
     "serif": '"Iowan Old Style", "Noto Serif CJK SC", "Songti SC", "SimSun", Georgia, serif',
@@ -53,7 +54,7 @@ def catalog(project=None):
                 item = json.loads(path.read_text(encoding="utf-8"))
                 if not re.fullmatch(r"[a-z][a-z0-9-]{0,48}", item.get("id", "")):
                     raise ValueError(f"Invalid template id in {path.name}")
-                if any(x["id"] == item["id"] for x in items):
+                if item["id"] in LEGACY_TEMPLATE_IDS or any(x["id"] == item["id"] for x in items):
                     raise ValueError(f"Duplicate template id: {item['id']}")
                 if not isinstance(item.get("name"), str) or not item["name"].strip():
                     raise ValueError(f"Template name missing: {path.name}")
@@ -69,7 +70,9 @@ def validate_config(config, items):
         raise ValueError("Unsupported configuration fields")
     if config.get("version", 1) != 1:
         raise ValueError("Unsupported configuration version")
-    template = next((i for i in items if i["id"] == config.get("template")), None)
+    requested = config.get("template")
+    identifier = LEGACY_TEMPLATE_IDS.get(requested, requested) if isinstance(requested, str) else None
+    template = next((i for i in items if i["id"] == identifier), None)
     if not template:
         raise ValueError("Unknown template")
     title = config.get("title", "Slidev Presentation")
@@ -101,7 +104,7 @@ def validate_config(config, items):
     return {"version": 1, "template": template["id"], "title": title.strip(), "settings": settings}
 
 
-def default_config(project=None, template="ics-course", title="让机制看得见"):
+def default_config(project=None, template="cyan-classroom", title="让机制看得见"):
     return validate_config({"template": template, "title": title}, catalog(project))
 
 
@@ -328,7 +331,7 @@ def restore(project, name="latest", protect=True):
 def save_template(project, identifier, name, config=None):
     if not re.fullmatch(r"[a-z][a-z0-9-]{0,48}", identifier) or not isinstance(name,str) or not name.strip():
         raise ValueError("Use a lowercase template id and a nonempty name")
-    if any(x["id"] == identifier for x in catalog(project)):
+    if identifier in LEGACY_TEMPLATE_IDS or any(x["id"] == identifier for x in catalog(project)):
         raise ValueError("Template id already exists; choose another")
     if not inside(project,"slides.md").is_file():
         raise ValueError("Create a deck before saving a project template")

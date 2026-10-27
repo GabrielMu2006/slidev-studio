@@ -1,7 +1,7 @@
 {
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "slidev-studio",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "Author and verify Slidev decks, choose visual presets, and distill full reusable templates from reference PowerPoints with an agent.",
   "license": "MIT",
   "extensions": {

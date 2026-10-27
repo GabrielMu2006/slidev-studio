@@ -24,6 +24,16 @@ class StudioTests(unittest.TestCase):
             studio.apply(self.project,config)
             self.assertEqual((self.project/"slides.md").read_text().split("\n---\n",2)[2],original)
             self.assertEqual(studio.load_config(self.project)["template"],template["id"])
+    def test_legacy_course_id_loads_without_losing_settings_or_content(self):
+        config=studio.load_config(self.project);config['template']='ics-course';config['settings']['accent']='#123456'
+        (self.project/studio.CONFIG).write_text(json.dumps(config))
+        original=(self.project/'slides.md').read_text().split('\n---\n',2)[2]
+        normalized=studio.load_config(self.project)
+        self.assertEqual(normalized['template'],'cyan-classroom');self.assertEqual(normalized['settings']['accent'],'#123456')
+        studio.apply(self.project,normalized)
+        self.assertEqual((self.project/'slides.md').read_text().split('\n---\n',2)[2],original)
+        self.assertEqual(studio.default_config(template='ics-course')['template'],'cyan-classroom')
+        with self.assertRaises(ValueError):studio.save_template(self.project,'ics-course','Reserved alias')
     def test_reapply_is_noop(self):
         config=studio.load_config(self.project)
         count=len(list((self.project/".slidev-studio/backups").iterdir()))

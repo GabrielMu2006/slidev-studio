@@ -15,7 +15,7 @@ Read the actual printed port and show that localhost URL in the available browse
 
 | Preset | Useful for | Character |
 | --- | --- | --- |
-| `ics-course` | Chinese teaching, course introductions | Dark cover, white content, cyan/blue gradient headings. Inspired by [the user's reference](https://slide.huh.moe/00/1); original local chip illustration, no copied personal details/photos. |
+| `cyan-classroom` | Chinese teaching, course introductions | Dark cover, white content, cyan/blue gradient headings. Inspired by [the user's reference](https://slide.huh.moe/00/1); original local chip illustration, no copied personal details/photos. |
 | `minimal-light` | General talks, product explanations | Warm white, green accent, restrained typography. |
 | `academic-paper` | Research meetings, papers | Paper background, red headings, serif typography. |
 | `terminal-dark` | Code demos, technical talks | Dark canvas, light text, mint accent. |
@@ -24,13 +24,13 @@ Read the actual printed port and show that localhost URL in the available browse
 | `blueprint-lab` | Engineering, architecture | Navy grid, cyan annotations, monospaced headings. |
 | `keynote-rose` | Keynotes, launches | Rose/berry, large headings, open poster composition. |
 
-For a prompt such as “make a Chinese teaching deck like this reference,” `ics-course` is a reasonable starting choice. For an existing branded project, inspect its theme first and preserve it unless restyling is requested.
+For a prompt such as “make a Chinese teaching deck like this reference,” `cyan-classroom` is a reasonable starting choice. For an existing branded project, inspect its theme first and preserve it unless restyling is requested.
 
 ## Direct commands
 
 ```bash
 # Creates a new destination; refuses an existing directory, including empty ones.
-python3 <skill-dir>/scripts/studio.py new ./talk --template ics-course --title "计算机系统导论"
+python3 <skill-dir>/scripts/studio.py new ./talk --template cyan-classroom --title "计算机系统导论"
 
 # Changes managed settings, preserves narrative and component code.
 python3 <skill-dir>/scripts/studio.py apply ./talk --template academic-paper --set titleSize=40 --set accent=#8d2536

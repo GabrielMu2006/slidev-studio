@@ -1,7 +1,7 @@
 [
   {
-    "id": "ics-course",
-    "name": "ICS 课程",
+    "id": "cyan-classroom",
+    "name": "青蓝课堂",
     "description": "深色封面、白底内容、青蓝渐变标题。适合中文课程与教学。",
     "source": "https://slide.huh.moe/00/1",
     "defaults": {
@@ -24,7 +24,7 @@
       "colorSchema": "light",
       "composition": "classic"
     },
-    "nameEn": "ICS Course",
+    "nameEn": "Cyan Classroom",
     "descriptionEn": "Dark illustrated cover, white content, cyan headings for teaching."
   },
   {

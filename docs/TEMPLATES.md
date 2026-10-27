@@ -4,13 +4,13 @@
 
 These eight items are built-in style presets. Full PPT-derived layout templates use the separate import skill. Each pair shows actual Slidev cover/content renders with matching sample content. Select by number or ID.
 
-## 1. ICS 课程 / ICS Course
+## 1. 青蓝课堂 / Cyan Classroom
 
-`ics-course` · 深色封面、白底内容、青蓝渐变标题。适合中文课程与教学。
+`cyan-classroom` · 深色封面、白底内容、青蓝渐变标题。适合中文课程与教学。
 
 Dark illustrated cover, white content, cyan headings for teaching.
 
-![ICS 课程 / ICS Course: cover and content](images/ics-course.png)
+![青蓝课堂 / Cyan Classroom: cover and content](images/cyan-classroom.png)
 
 ## 2. 清简 / Minimal Light
 

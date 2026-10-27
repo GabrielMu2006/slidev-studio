@@ -4,7 +4,7 @@
 
 ## 中文
 
-插件包含两项统一版本的 skill：`slidev`（Slidev 创作、风格选择器、交互与导出）和 `slidev-template-import`（从 PPT 提炼完整模板并验证、入库、复用）。八套内置风格为 ICS 课程、清简、纸上学术、夜间技术、咨询蓝、琥珀叙事、蓝图实验和玫瑰演讲。它们是可调整的风格预设；从 PPT 提取的完整布局模板使用单独的模板库。
+插件包含两项统一版本的 skill：`slidev`（Slidev 创作、风格选择器、交互与导出）和 `slidev-template-import`（从 PPT 提炼完整模板并验证、入库、复用）。八套内置风格为 青蓝课堂、清简、纸上学术、夜间技术、咨询蓝、琥珀叙事、蓝图实验和玫瑰演讲。它们是可调整的风格预设；从 PPT 提取的完整布局模板使用单独的模板库。
 
 从 GitHub 安装：
 
@@ -31,7 +31,7 @@ Python 3.9+ 可运行工具；真实演示需要符合 CLI 要求的 Node。样�
 
 ## English
 
-Two coordinated skills ship together: `slidev` (authoring, preset picker, interactions and exports) and `slidev-template-import` (PPT-derived full templates, verification, library registration and reuse). Eight built-in styles are ICS Course, Minimal Light, Academic Paper, Terminal Dark, Consulting Blue, Editorial Amber, Blueprint Lab and Keynote Rose. These are configurable style presets; full layout bundles use a separate template library.
+Two coordinated skills ship together: `slidev` (authoring, preset picker, interactions and exports) and `slidev-template-import` (PPT-derived full templates, verification, library registration and reuse). Eight built-in styles are Cyan Classroom, Minimal Light, Academic Paper, Terminal Dark, Consulting Blue, Editorial Amber, Blueprint Lab and Keynote Rose. These are configurable style presets; full layout bundles use a separate template library.
 
 Install from GitHub using the Codex commands above, or `claude plugin install slidev-studio --marketplace GabrielMu2006/slidev-studio` for Claude Code. Cursor and generic hosts follow the linked installation guide. Start a fresh chat after installation/update; do not add duplicate global skill copies.
 
